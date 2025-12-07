@@ -6,7 +6,7 @@ document.querySelectorAll("[data-video]").forEach(wrapper => {
     iframe.style.display = "block";
 
     // !!! POUŽIJ EMBED URL
-    iframe.src = "https://www.youtube-nocookie.com/embed/3WAxkg9NzL8?autoplay=1";
+    iframe.src = "https://www.youtube.com/embed/jiSbu1DT_PQ?modestbranding=1&rel=0&color=white"
 
     placeholder.remove();
   });
