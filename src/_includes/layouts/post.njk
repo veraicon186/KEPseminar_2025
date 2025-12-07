@@ -1,0 +1,64 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+
+<section class="post-detail">
+
+  <div class="post-left">
+
+    <img class="post-image" src="{{ post.image }}" alt="">
+    <div class="post-text-content">
+
+        <h1 class="post-title">{{ post.title }}</h1>
+
+        <p class="post-author">{{ post.author }}</p>
+        <p class="post-institution">{{ post.institution }}</p>
+
+    </div>
+
+    <div class="post-links">
+          
+          {% if post.presentation %}
+            <a href="{{ post.presentation }}" class="btn" target="_blank" rel="noopener">prezentace</a>
+          {% endif %}
+
+          {% if post.link %}
+            <a href="{{ post.link }}" class="btn">web</a>
+          {% endif %}
+        </div>
+
+  </div>
+
+ <div class="post-right">
+  
+  {% for paragraph in post.text %}
+    <p>{{ paragraph | safe }}</p>
+  {% endfor %}
+
+  <hr>
+
+  <div class="post-bio">
+    {% for line in post.bio %}
+      <p>{{ line | safe }}</p>
+    {% endfor %}
+  </div>
+
+</div>
+
+ <nav class="post-pagination">
+          
+        {% if pagination.href.previous %}
+          <a class="prev-post" href="{{ pagination.href.previous }}">‹</a>
+        {% endif %}
+
+        {% if pagination.href.next %}
+          <a class="next-post" href="{{ pagination.href.next }}">›</a>
+        {% endif %}
+ </nav>
+
+
+</section>
+
+{% endblock %}
+
+

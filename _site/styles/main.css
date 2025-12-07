@@ -1,0 +1,904 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;  /* výška headeru + rezerva */
+}
+
+
+
+body {
+  margin: 0;
+  background-color: rgb(255, 255, 255);
+  
+}
+
+h1 , h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family:  Georgia, 'PT Serif', 'Times New Roman', Times, serif;
+
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #053052;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.25); /* doporučený stín */
+}
+
+
+/* ===== MENU ===== */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1200px;
+  width: 100%;
+  padding: 0.5rem 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  /* důležité pro pseudo vrstvu */
+  background: transparent;
+}
+
+/* Jen podstránky mají fixní menu */
+.subpage .site-header {
+  position: absolute;
+}
+
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    rgba(5,48,82,0.7),
+    rgba(5,48,82,0.35) 50%,
+    rgba(5,48,82,0)
+  );
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Aktivní stav po scrollu */
+.site-header.scrolled::before {
+  opacity: 1;
+}
+
+
+.site-header.scrolled {
+  background: linear-gradient(
+    to left,
+    rgba(5,48,82,0.7),
+    rgba(5,48,82,0.4) 50%,
+    rgba(5,48,82,0)
+  );
+  backdrop-filter: blur(6px);
+}
+
+/* "Halo" pod menu – jen pod nav */
+.nav {
+  display: flex;
+  gap: 2rem;
+
+  position: relative;
+  padding: 1rem 2rem;
+  overflow: hidden;
+}
+
+/* gradient + blur pás jen pod položkami */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+ 
+
+  /*backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);*/
+}
+
+.nav a {
+  font-family: 'Raleway', sans-serif;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  position: relative;
+  text-shadow: #053052 1px 1px 6px;
+}
+
+/* podtržení při hoveru */
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 1.5px;
+  background: white;
+  transition: width 0.3s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* Homepage */
+.home .nav a {
+  color: white;
+}
+
+.home .nav a::after {
+  background: white;
+}
+
+/* Podstránky */
+.subpage .nav a {
+  color: #053052;
+  text-shadow: none;
+}
+
+.subpage .nav a::after {
+  background: #053052;
+}
+
+/* ---------- HOMEPAGE ---------- */
+.home .menu-toggle {
+  color: white;
+}
+
+/* ---------- PODSTRÁNKY ---------- */
+@media (min-width: 700px) and (max-width: 1100px) {
+  .subpage .menu-toggle {
+  color: #053052;
+}
+
+}
+
+.menu-bg {
+  position: relative;
+}
+
+
+
+/* Hamburger skrytý na desktopu */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  margin: 0 1rem;
+}
+
+
+/* ===== MOBIL a TABLET ===== */
+@media (max-width: 1100px) {
+  .menu-toggle {
+    display: block;
+    z-index: 10000;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100vh;
+    width: 260px;
+    background: rgba(4, 32, 53, 0.85);
+    backdrop-filter: blur(3px);
+
+    flex-direction: column;
+    padding: 2rem;
+    transition: left 0.3s ease;
+    z-index: 9998;
+
+    /* vypneme halo efekt */
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .nav::before {
+    display: none;
+  }
+
+  .nav a {
+    color: white;
+    padding: 1rem 0;
+  }
+
+  .nav.active {
+    left: 0;
+  }
+
+  .site-header {
+    padding: 0;
+  }
+}
+
+
+/* ===== MOBIL – vždy bílé odkazy v otevřeném menu ===== */
+@media (max-width: 1100px) {
+  .nav a {
+    color: white !important;
+    text-shadow: none;
+  }
+
+  .nav a::after {
+    background: white !important;
+  }
+}
+
+/* ===== HERO ===== */
+
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Obal, který určuje šířku i responsivní velikost */
+.hero-image-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* 1) Background image */
+.hero-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 1;
+}
+
+/* 2) Hero box */
+.hero-box {
+ position: absolute;
+  top: 0;
+  left: 20%;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.2rem;
+  width: 30%;
+  z-index: 2;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3) PNG overlay */
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;     /* ← klíč! kopíruje šířku hero-bg */
+  height: auto;
+  pointer-events: none;
+  z-index: 3;
+}
+
+
+.hero-box h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #0a1f33; /* tmavě modrá z XD */
+}
+
+.hero-subtitle {
+  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: #0a1f33;
+}
+
+.hero-date {
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: #0a1f33; 
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+}
+
+
+.hero-box-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 0 15% 0;
+
+}
+
+.hero-logo-wrap {
+  position: relative;
+  width: fit-content;
+  margin-left: auto; /* zarovná doprava */
+  margin-top: 1rem;
+}
+
+.hero-logo {
+  display: block;
+  width: 50px;
+
+}
+
+@media (min-width: 700px) {
+  .hero-box h1 {
+    font-size: 2.3rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-date {
+    font-size: 1.5rem;
+  }
+
+  .hero-logo {
+    width: 70px;
+}
+}
+
+@media (min-width: 1000px) {
+  .hero-box {
+    padding: 2rem 2.2rem;
+  }
+  .hero-box h1 {
+    font-size: 2.8rem;
+  }
+  .hero-subtitle {
+    font-size: 1.6rem;
+  }
+
+  .hero-date {
+    font-size: 2rem;
+  }
+
+  .hero-logo {
+    width: 80px;
+}
+
+}
+/* Obecný styl čar */
+.line {
+  position: absolute;
+  width: 90px;
+  height: 1px;
+  background: #74b5d8; /* světle modrá */
+  display: block;
+  transform-origin: left center;
+  border-radius: 2px;
+}
+
+/* Konkrétní čára 1 */
+.line-1 {
+  bottom: 15px;     /* upravitelné tak, aby sedělo */
+  right: 15px;    /* vyčnívá doprava od loga */
+  transform: rotate(-45deg);
+}
+
+/* Konkrétní čára 2 */
+.line-2 {
+  bottom: 20px;    /* o trochu níž než první */
+  right: 20px;    /* mírně posunutá pro zkřížení */
+  transform: rotate(-35deg);
+}
+
+@media (min-width: 700px) {
+
+  .line-1 {
+    bottom: 40px;
+    right: 35px;
+  }
+
+  .line-2 {
+    bottom: 50px;
+    right: 35px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .line {
+  width: 120px;
+  }
+
+  .line-1 {
+    bottom: 40px;
+    right: 35px;
+  }
+
+  .line-2 {
+    bottom: 50px;
+    right: 40px;
+  }
+}
+
+/* ===== SEKCE ===== */
+
+
+.section-title {
+  position: relative;
+  background: white;
+  color: #0a1f33;
+  font-weight: 700;
+  padding: 0.7rem 2rem;
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+
+
+/* ===== ABOUT ===== */
+.about-section {
+  color: white;
+  margin-bottom: 3rem;
+  
+}
+
+.about-box {
+  padding: 0 4rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-text p {
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+
+/* Kontejner s textem */
+.expandable {
+  position: relative;
+  max-height: 180px;
+  overflow: hidden;
+  background: #053052; /* tvoje barva pozadí */
+  transition: max-height 0.4s ease;
+}
+
+/* Fade-out efekt na spodku */
+.expandable::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px; /* výška přechodu – můžeš změnit */
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 48, 82, 0),   /* průhledné */
+    #053052               /* plná barva pozadí */
+  );
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Po rozbalení: přechod zmizí */
+.expandable.expanded {
+  max-height: 2000px;
+}
+
+.expandable.expanded::after {
+  opacity: 0;
+}
+
+/* Tlačítko */
+.expand-toggle {
+  background: #77c1d9;
+  color: #0a1f33;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  outline: none;
+}
+
+
+
+
+/* ===== VIDEO SECTION ===== */
+
+.video-section {
+  margin-bottom: 3rem;
+}
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  aspect-ratio: 16/9;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: none; /* Hlavní trik — iframe je skrytý! */
+}
+
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.video-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: white;
+  opacity: 0.9;
+}
+
+
+
+
+
+/* ===== POSTS GRID ===== */
+
+.grid {
+  margin: 2rem auto !important;
+}
+
+.posts-grid {
+  padding: 0 0 3rem 0;
+  background-image: url('/img/hero2.png'); /* pozadí pro celou sekci */
+  background-attachment: fixed;  /* klíčový efekt */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+}
+
+.posts-grid img {
+  opacity: 0.5;
+}
+
+@media (min-width: 700px) {
+  .posts-grid .grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+    justify-content: center;
+    max-width: 900px;
+    width: 100%;          /* ← TOTO DOPLNIT */
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+}
+
+
+/* --- samotná dlaždice --- */
+.tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin: 2rem;
+}
+
+@media (min-width: 700px) {
+  .tile {
+    margin: 0;
+  } 
+}
+
+/* --- vnitřní struktura --- */
+.tile-inner {
+  position: relative;
+  background: white;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+
+/* tablet & desktop = čtverce */
+@media (min-width: 700px) {
+  .tile-inner {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* --- titulek --- */
+.tile-title {
+  position: relative;
+  z-index: 2;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #0a1f33; /* tmavě modrá */
+  pointer-events: none;
+}
+
+@media (min-width: 700px) {
+  .tile-title {
+    font-size: 1.3rem;
+  }
+}
+
+/* --- obrázek pro hover --- */
+.tile-inner img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;                /* skrytý obrázek */
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  transform: scale(1);
+  z-index: 1;
+}
+
+/* --- hover efekt --- */
+.tile:hover img {
+  opacity: 1;
+  transform: scale(1.07);    /* jemný zoom */
+}
+
+/* aby text zmizel na hoveru */
+.tile:hover .tile-title {
+  opacity: 1;
+  color: white;
+  transition: opacity 0.2s ease;
+  text-shadow: #053052 1px 1px 4px;
+}
+
+/* -------------------------------------------------
+   POST DETAIL – layout dvou sloupců
+-------------------------------------------------- */
+
+.post-detail {
+  display: flex;
+  min-height: 100vh;
+  background: white;
+}
+
+/* ------- Levý panel -------- */
+.post-left {
+  width: 40%;
+  background: #0a1f33;    /* tmavě modrá */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.post-left .post-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.post-text-content {
+  padding: 0 2rem 2rem 2rem;
+}
+
+.post-left .post-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.post-author,
+.post-institution {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #d4e4ef;
+}
+
+/* odkazy */
+.post-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 210px;
+  margin-bottom: 2rem;
+
+}
+
+.post-links .btn {
+  background-color: #77c1d9;
+  color: #0a1f33;
+  font-weight: 700;
+  padding: 0.6rem 1.2rem;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+
+  transform-origin: left center;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+}
+
+.post-links .btn:hover {
+  background-color: #9ad7eb;
+  transform: scaleX(1.03);
+}
+
+
+/* navigace mezi příspěvky */
+.post-nav {
+  margin-top: auto;
+  padding: 2rem;
+}
+
+.nav-btn {
+  background: #fff;
+  color: #0a1f33;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+/* ------- Pravá část -------- */
+.post-right {
+  width: 60%;
+  padding: 6rem 3rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #0a1f33;
+}
+
+.post-right p {
+  margin-bottom: 1rem;
+  font-family: 'Raleway', sans-serif !important;
+}
+
+/* bio */
+.post-bio {
+  margin-top: 1.5rem;
+  color: #0a1f33;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-family: 'Raleway', sans-serif;
+}
+
+
+
+
+
+/* divider */
+.post-right hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid #cccccc;
+}
+
+/* ------- Responsivita -------- */
+@media (max-width: 700px) {
+  .post-detail {
+    flex-direction: column;
+  }
+
+  .post-left,
+  .post-right {
+    width: 100%;
+  }
+
+  .post-left {
+    padding: 0;
+  }
+
+  .post-right {
+    padding: 2rem;
+  }
+}
+
+
+.post-pagination {
+  display: flex;
+  max-height: 50px;
+  margin-top: 4rem;
+  gap:0.5rem;
+}
+
+.post-pagination a {
+  font-family: 'Raleway', sans-serif;
+  color: #0a1f33;
+  background: #77c1d9;
+  padding: 0.7rem 1.2rem 0 1.2rem;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+
+}
+
+.post-pagination a:hover, .expand-toggle:hover {
+  background: #9ad7eb;
+}
+
+@media (max-width: 700px) {
+  .post-pagination {
+   margin: 1rem auto 3rem;
+  }
+
+  .post-pagination a{
+   padding-bottom: 1rem;
+  }
+}
+
+/* Galerie */
+.gallery-slider {
+  position: relative;
+  max-width: 900px;
+  margin:  auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0 4rem;
+}
+
+.slider-window {
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+
+.slider-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+
+.slider-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-btn {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  background: none;
+  color: rgba(255, 255, 255, 0.541);
+  border: none;
+  font-size: 3rem;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+
+}

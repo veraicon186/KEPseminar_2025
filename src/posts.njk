@@ -1,0 +1,11 @@
+---
+pagination:
+  data: posts
+  size: 1
+  alias: post
+permalink: "{{ post.permalink }}"
+layout: "post.njk"
+
+eleventyComputed:
+  paginationData: "{{ pagination }}"
+---
