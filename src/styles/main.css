@@ -31,7 +31,7 @@ p {
 main {
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #053052;
+  background-color: #ffffff;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.25); /* doporučený stín */
 }
 
@@ -422,20 +422,24 @@ main {
 
 .section-title {
   position: relative;
-  background: white;
   color: #0a1f33;
   font-weight: 700;
-  padding: 0.7rem 2rem;
+  padding: 0.7rem 0 0.5rem 2rem;
   display: inline-block;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-top: 2rem; 
+  border-bottom: 1px solid #053052;
 }
 
-
+#prispevky .section-title  {
+  color: white;
+  border-bottom: 1px solid #ffffff;
+  margin-bottom: 2rem;
+}
 
 /* ===== ABOUT ===== */
 .about-section {
-  color: white;
+  color: rgb(0, 0, 0);
   margin-bottom: 3rem;
   
 }
@@ -461,34 +465,18 @@ main {
 
 /* Kontejner s textem */
 .expandable {
-  position: relative;
-  max-height: 180px;
   overflow: hidden;
-  background: #053052; /* tvoje barva pozadí */
-  transition: max-height 0.4s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 
-/* Fade-out efekt na spodku */
-.expandable::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px; /* výška přechodu – můžeš změnit */
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 48, 82, 0),   /* průhledné */
-    #053052               /* plná barva pozadí */
-  );
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
 
-/* Po rozbalení: přechod zmizí */
 .expandable.expanded {
-  max-height: 2000px;
+  -webkit-line-clamp: unset;
+  display: block;
 }
+
 
 .expandable.expanded::after {
   opacity: 0;
@@ -574,7 +562,7 @@ main {
 
 .posts-grid {
   padding: 0 0 3rem 0;
-  background-image: url('/img/hero2.png'); /* pozadí pro celou sekci */
+  background-image: url('/img/hero2_darkblue.jpg'); /* pozadí pro celou sekci */
   background-attachment: fixed;  /* klíčový efekt */
   background-size: cover;
   background-position: center;
@@ -618,6 +606,7 @@ main {
 .tile-inner {
   position: relative;
   border-left: 2px solid rgb(255, 255, 255);
+  background: #053052;
 
   overflow: hidden;
   display: flex;
@@ -640,7 +629,7 @@ main {
   z-index: 2;
   font-weight: 500;
   font-size: 1.2rem;
-  color: #d3f7ff; 
+  color: #e5f9fe; 
   pointer-events: none;
 }
 
@@ -692,7 +681,7 @@ main {
 /* ------- Levý panel -------- */
 .post-left {
   width: 40%;
-  background: #0a1f33;    /* tmavě modrá */
+  background: #053052;    /* tmavě modrá */
   color: white;
   display: flex;
   flex-direction: column;
@@ -911,7 +900,7 @@ main {
 
 
   background: none;
-  color: rgba(255, 255, 255, 0.541);
+  color: #053152a7;
   border: none;
   font-size: 3rem;
   width: 44px;
@@ -919,3 +908,20 @@ main {
   cursor: pointer;
 
 }
+
+
+.footer-content {
+  text-align: center;
+  padding: 0.5rem 0;
+   background: linear-gradient(
+    to left,
+    rgba(5,48,82,1),
+    rgba(5,48,82,0.4) 50%,
+    rgba(5,48,82,0.2)
+  );
+  backdrop-filter: blur(6px);
+
+  color: white;
+  font-size: 0.9rem;
+}
+
